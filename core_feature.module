@@ -1,0 +1,33 @@
+<?php
+/**
+ * @file
+ * Code for the Core feature.
+ */
+
+/**
+ * Implements hook_system_info_alter().
+ */
+function core_feature_system_info_alter(&$info, $file, $type) {
+  $excluded_modules = array(
+    'rules_admin',
+    'ds_ui',
+    'coffee',
+    'views_ui',
+    'video_ui',
+    'context_ui',
+    'node_export',
+    'nexteuropa_editorial',
+  );
+
+  $dependencies = &$info['dependencies'];
+  if (!empty($dependencies)) {
+    foreach ($dependencies as $key => $value) {
+      if (strpos($value, 'tmgmt') !== FALSE
+        || ($value === 'og' || strpos($value, 'og_') === 0 || substr($value, -3) == '_og')
+        || in_array($value, $excluded_modules)
+      ) {
+        unset($dependencies[$key]);
+      }
+    }
+  }
+}
