@@ -5,6 +5,8 @@
  * Install, update and uninstall functions.
  */
 
+include_once 'core_feature.install.inc';
+
 /**
  * Implements hook_install().
  */
